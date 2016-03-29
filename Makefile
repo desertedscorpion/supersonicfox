@@ -1,13 +1,25 @@
+RELEASE=0.0.0
+
 phonetic-${VERSION}.spec : phonetic.spec
 	sed -e "s#VERSION#${VERSION}#" -e "s#RELEASE#${RELEASE}#" -e "w${@}" ${<}
 
-phonetic-${VERSION}.tar.gz :
-	curl --output ${@} https://github.com/desertedscorpion/whitevenus/releases/tag/${VERSION}
+phonetic-${VERSION} :
+	mkdir --parents ${@}
+	git -C ${@} init
+	git -C ${@} remote add origin git@github.com:desertedscorpion/whitevenus.git
+	git -C ${@} fetch origin
+	git -C ${@} checkout tags/${VERSION}
 
-phonetic-${VERSION}.src.rpm : phonetic-${VERSION}.spec phonetic-${VERSION}.tar.gz
+phonetic-${VERSION}.tar : phonetic-${VERSION}
+	tar --create --file ${@} ${<}
+
+phonetic-${VERSION}.tar.gz : phonetic-${VERSION}.tar
+	gzip --to-stdout ${<} > ${@}
+
+buildsrpm/phonetic-${VERSION}-${RELEASE}.src.rpm : phonetic-${VERSION}.spec phonetic-${VERSION}.tar.gz
 	mkdir --parents buildsrpm
 	mock --buildsrpm --spec phonetic-${VERSION}.spec --sources phonetic-${VERSION}.tar.gz --resultdir buildsrpm
 
-phonetic-${VERSION}.x86_48.rpm : phonetic-${VERSION}.src.rpm
+rebuild/phonetic-${VERSION}-${RELEASE}.x86_64.rpm : buildsrpm/phonetic-${VERSION}-${RELEASE}.src.rpm
 	mkdir --parents rebuild
-	mock --rebuild phonetic-${VERSION}.src.rpm --resultdir rebuild
+	mock --rebuild buildsrpm/phonetic-${VERSION}-${RELEASE}.src.rpm --resultdir rebuild

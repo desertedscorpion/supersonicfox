@@ -6,11 +6,13 @@ Summary:        transforms a stream of characters into a stream of words (mostly
 Group:          Administrative
 License:        GNU/GPL3
 URL:            git@github.com:desertedscorpion/whitevenus.git
-Source0:        https://github.com/desertedscorpion/whitevenus/releases/tag/VERSION
+Source:         %{name}-%{version}.tar.gz
+Prefix:         %{_prefix}
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
-BuildRequires:
 Requires:       coreutils sed
+%define debug_package %{nil}
+
 
 %description
 This program takes an input stream of characters and outputs a stream of words.
@@ -25,7 +27,6 @@ Other words are written in mixed case.
 
 
 %build
-%configure
 
 
 %install
@@ -39,5 +40,4 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %files
-%attr(0555,root,root)
-/usr/local/bin/phonetic
+%attr(0555,root,root) /usr/local/bin/phonetic
