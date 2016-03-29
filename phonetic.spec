@@ -31,8 +31,8 @@ Other words are written in mixed case.
 
 %install
 rm -rf ${RPM_BUILD_ROOT}
-mkdir --parents ${RPM_BUILD_ROOT}/usr/local/bin
-cp phonetic.sh ${RPM_BUILD_ROOT}/usr/local/bin/phonetic
+mkdir --parents ${RPM_BUILD_ROOT}/usr/bin
+cp phonetic.sh ${RPM_BUILD_ROOT}/usr/bin/phonetic
 
 
 %clean
@@ -40,4 +40,4 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %files
-%attr(0555,root,root) /usr/local/bin/phonetic
+%attr(0555,root,root) /usr/bin/phonetic
