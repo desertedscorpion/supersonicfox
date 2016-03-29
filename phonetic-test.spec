@@ -10,7 +10,7 @@ Source:         %{name}-%{version}.tar.gz
 Prefix:         %{_prefix}
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
-Requires:       coreutils sed
+Requires:       coreutils
 %define debug_package %{nil}
 
 
@@ -31,7 +31,7 @@ cp testing.sh ${RPM_BUILD_ROOT}/usr/sbin/phonetic-test
 
 
 %clean
-rm -rf $RPM_BUILD_ROOT
+rm -rf ${RPM_BUILD_ROOT}
 
 
 %files
